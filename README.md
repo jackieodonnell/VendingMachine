@@ -1,92 +1,130 @@
-# module1-capstone-main
+## Module 1 Capstone - Taste Elevator Vending Machine Application
+
+You've been asked to develop an application for the newest vending machine distributor,
+Taste Elevator.  TE Vending Customers purchase food items from the vending machine and are charged accordingly.
 
 
+### Application Requirements
 
-## Getting started
+1. The TE Vending machine dispenses munchies, candy, drinks, and gum.
+   - Each item has a Name and a Price.
+2. A main menu must display when the software runs, presenting the following options:
+    > ```
+    > (D) Display Vending Items
+    > (P) Purchase
+    > (E) Exit
+    > ```
+3. The inventory is stocked via an input file when the application starts.  **2 different files are provided, make sure your program will work with either one.**
+4. Each time the application runs, the inventory is restocked.  The only time the inventory is stocked is when it is started.
+5. When the customer selects "(D) Display Vending Items", they're presented
+   with a list of all items in the machine with its quantity remaining:
+   
+    - Each product has a slot identifier and a purchase price.
+    - Each slot has enough room for 6 of that product.
+    - Every product is initially stocked to the maximum amount.
+    - A product that has run out must indicate that it is NO LONGER AVAILABLE.
+6. When the customer selects "(P) Purchase", they are guided through the purchasing
+   process menu:
+   
+    >```
+    >(M) Feed Money
+    >(S) Select Item
+    >(F) Finish Transaction
+    >
+    > Current Money Provided: $2.00
+    >```
+7. The purchase process flow is as follows:
+    1. Selecting "(M) Feed Money" allows the customer to repeatedly feed money into the
+       machine in valid, whole dollar amounts—for example, $1, $5, $10, or $20.
+        - The "Current Money Provided" indicates how much money the customer
+        has fed into the machine.
+    2. Selecting "(S) Select Item" allows the customer to select an item to
+       purchase.
+        - Show the list of items available and allow the customer to enter
+        a slot identifier to select an item.
+        - If the item (slot identifier) does not exist, the customer is informed and returned
+        to the Purchase menu.
+        - If a product is NO LONGER AVAILABLE, the customer is informed and returned to the
+        Purchase menu.
+        - If a valid item is selected, it is dispensed to the customer.
+        - Dispensing an item prints the item name, cost, and the money
+        remaining. Dispensing also returns a message:
+          - All munchy items print "Munchy, Munchy, so Good!"
+          - All candy items print "Sugar, Sugar, so Sweet!"
+          - All drink items print "Drinky, Drinky, Slurp Slurp!"
+          - All gum items print "Chewy, Chewy, Lots O Bubbles!"
+        - After the item is dispensed, the machine must update its balance
+        accordingly and return the customer to the Purchase menu.
+    3. Selecting "(F) Finish Transaction" allows the customer to complete the
+       transaction and receive any remaining change.
+        - The customer's money is returned using nickels, dimes, quarters, and dollars (single dollars)
+        (using the smallest amount of coins possible).
+        - The machine's current balance must be updated to $0 remaining.
+    4. After completing their purchase, the user is returned to the "Main" menu to
+    continue using the Vending machine.
+8. All purchases must be audited to prevent theft by creating a Audit file:
+   - Each purchase must generate a line in a file called `Audit.txt`.
+   - The audit entry must be in the format:
+        >```
+        > 01/01/2016 12:00:00 PM MONEY FED:          $5.00   $5.00
+         >01/01/2016 12:00:15 PM MONEY FED:          $5.00  $10.00
+         >01/01/2016 12:00:20 PM 7Down           B4 $10.00   $6.75
+         >01/01/2016 12:01:25 PM SingleMint Gum  C2  $7.50   $4.40
+         >01/01/2016 12:01:35 PM CHANGE GIVEN:       $6.45   $0.00
+         >```
+9. Create as many of your classes as possible to be "testable" classes. **Limit console**
+**input and output to as few classes as possible**.
+10. Optional - Sales Report
+    - Provide a "Hidden" menu option on the main menu ("S") that writes to a sales
+    report that shows the total sales since the machine was started. The name of the
+    file must include the date and time so each sales report is uniquely named.
+    - An example of the output format is provided below.
+11. Provide unit tests demonstrating that your code works correctly.
+___
+### Vending Data File
+The input file that stocks the products is a comma separated values file (csv). Each line is a separate item in the file and follows the below format:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+ Column Name   | Description 
+----------------|-------------
+ Slot Location | The slot location in the machine where the item is set. 
+ Item Name | The display name of the item.                
+ Price         | The purchase price for the item.                             
+ Type          | The item type for this row.                                 
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+For example:
 
 ```
-cd existing_repo
-git remote add origin https://git.techelevator.com/campuses/nlr/jul-2022/java-green/student-pairs/mainprojects/module1-capstone-main.git
-git branch -M main
-git push -uf origin main
+A1,Preengles,2.35,Munchy
+A1,Chippos,2.55,Munchy
+B2,Papsi,3.45,Drink
+D1,Moonpie,2.95,Candy
 ```
 
-## Integrate with your tools
+An input file has been provided for testing with your repository: `TEVending.csv`.
 
-- [ ] [Set up project integrations](https://git.techelevator.com/campuses/nlr/jul-2022/java-green/student-pairs/mainprojects/module1-capstone-main/-/settings/integrations)
+---
+### Sales Report
+The output sales report file is a pipe-delimited file. Each line is a separate item with the number of sales for the applicable item. At the end of the report is a blank line followed by the **TOTAL SALES** dollar amount indicating the gross sales from the vending machine.
 
-## Collaborate with your team
+**Example Output**
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+>```
+>Taste Elevator Sales Report
+>Chiclets|3
+>Popcorn|3
+>U-Chews|0
+>Mountain Melter|5
+>7Down|3
+>Snykkers|2
+>Stackers|2
+>SingleMint Gum|3
+>Ginger Ayle|4
+>Wonka Bar|2
+>Papsi|6
+>Teaberry|1
+>Chippos|5
+>Caramel Bar|6
+>Moonpie|4
+>Preengles|2
+>TOTAL SALES 141.35 
+>```
