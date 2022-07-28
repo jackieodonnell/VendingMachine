@@ -1,6 +1,6 @@
 package com.techelevator.ui;
 
-import models.Item;
+import com.techelevator.models.Item;
 
 import java.util.List;
 
@@ -15,6 +15,14 @@ public class UserOutput {
         System.out.println();
         System.out.println("***************************************************");
         System.out.println("                      Home");
+        System.out.println("***************************************************");
+        System.out.println();
+    }
+
+    public static void displayPurchaseScreen() {
+        System.out.println();
+        System.out.println("***************************************************");
+        System.out.println("                   Purchase Menu");
         System.out.println("***************************************************");
         System.out.println();
     }

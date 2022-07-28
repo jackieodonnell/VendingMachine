@@ -1,6 +1,9 @@
 package com.techelevator.ui;
 
+import com.techelevator.models.Item;
+
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -24,7 +27,6 @@ public class UserInput {
 
         String selectedOption = scanner.nextLine();
         String option = selectedOption.trim().toLowerCase();
-        System.out.println("option = " + option);
         if (option.equals("d")) {
             return "display";
         } else if (option.equals("p")) {
@@ -35,8 +37,8 @@ public class UserInput {
             return "";
         }
     }
-    static BigDecimal currentMoneyProvided = new BigDecimal("0.00");
-    public static String getPurchaseScreenOption() {
+
+    public static String getPurchaseScreenOption(BigDecimal currentMoneyProvided) {
         System.out.println("What would you like to do?");
         System.out.println();
 
@@ -45,18 +47,13 @@ public class UserInput {
         System.out.println("F) Finish Transaction");
 
         System.out.println("\nCurrent Money Provided: $" + currentMoneyProvided);
-
         System.out.println();
         System.out.print("Please select an option: ");
 
         String selectedPurchaseOption = scanner.nextLine();
         String purchaseOption = selectedPurchaseOption.trim().toLowerCase();
-        System.out.println("option = " + purchaseOption);
         if (purchaseOption.equals("m")) {
-            System.out.println("Insert Dollar Bill: (1, 5, 10,20)");
-            BigDecimal moneyInserted = new BigDecimal(scanner.nextLine());
-            currentMoneyProvided = currentMoneyProvided.add(moneyInserted);
-            return currentMoneyProvided.toString();
+            return "feed money";
         } else if (purchaseOption.equals("s")) {
             return "select item";
         } else if (purchaseOption.equals("f")) {
@@ -65,19 +62,39 @@ public class UserInput {
             return "";
         }
     }
-}
 
-//        public static BigDecimal feedMoney() {
-//          System.out.println("Insert Dollars: ($1) ($5) ($10) ($20)");
-//            while (true) {
-//                System.out.println("Insert Dollars: ($1) ($5) ($10) ($20)");
-//               BigDecimal currentMoney = new BigDecimal(scanner.nextLine());
-//
-//            }
-//        }
-//
-//
-//    }
+    public static BigDecimal feedMoney() {
+        System.out.print("\nInsert Dollar Bill: (1, 5, 10, 20) >>> ");
+        BigDecimal moneyInserted = new BigDecimal("0.00");
+        try {
+            int moneyInt = Integer.parseInt(scanner.nextLine());
+            if (moneyInt == 1 || moneyInt == 5 || moneyInt == 10 || moneyInt == 20) {
+                moneyInserted = new BigDecimal(moneyInt);
+            } else {
+                System.out.println("\n*** Unsupported currency ***");
+            }
+        } catch (NumberFormatException e){
+            System.out.println("\n*** Unrecognized entry ***");
+        }
+        return moneyInserted;
+    }
+
+    public static Item selectItem(List<Item> inventory) {
+        UserOutput.displayInventory(inventory);
+        System.out.print("\nInput a selection: ");
+        String inputCode = scanner.nextLine();
+        Item selectedItem = null;
+        for (Item item : inventory) {
+            if (item.getSlotIdentifier().equals(inputCode)) {
+                selectedItem = item;
+                if (selectedItem.getQuantity() == 0) {
+                    System.out.println("NO LONGER AVAILABLE");
+                }
+            }
+        }
+        return selectedItem;
+    }
+}
 
 
 

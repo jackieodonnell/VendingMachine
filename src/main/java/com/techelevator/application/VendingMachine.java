@@ -1,8 +1,8 @@
 package com.techelevator.application;
 
+import com.techelevator.models.*;
 import com.techelevator.ui.UserInput;
 import com.techelevator.ui.UserOutput;
-import models.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class VendingMachine {
+public class VendingMachine implements Change {
     public void run() {
-        List<Item> inventory = readFile("catering1.csv");
-        //System.out.println(inventory);
+        List<Item> inventory = readFile("catering2.txt");
+        BigDecimal currentMoneyProvided = new BigDecimal("0.00");
         while(true) {
             UserOutput.displayHomeScreen();
             String choice = UserInput.getHomeScreenOption();
@@ -23,16 +23,49 @@ public class VendingMachine {
                 UserOutput.displayInventory(inventory);
             }
             else if(choice.equals("purchase")) {
-                String purchaseChoice = UserInput.getPurchaseScreenOption();
-                if (purchaseChoice.equals("feed money")) {
-
+                while (true) {
+                    UserOutput.displayPurchaseScreen();
+                    String purchaseChoice = UserInput.getPurchaseScreenOption(currentMoneyProvided);
+                    if (purchaseChoice.equals("feed money")) {
+                        BigDecimal moneyInserted = UserInput.feedMoney();
+                        currentMoneyProvided = currentMoneyProvided.add(moneyInserted);
+                    } else if (purchaseChoice.equals("select item")) {
+                        Item itemSelection = UserInput.selectItem(inventory);
+                        try{
+                            if (itemSelection.getQuantity() > 0) {
+                                currentMoneyProvided = dispense(itemSelection, currentMoneyProvided);
+                            }
+                        } catch (NullPointerException e){
+                            System.out.println(" *** Invalid Selection ***");
+                        }
+                    } else if (purchaseChoice.equals("finish transaction")){
+                        returnChange(currentMoneyProvided);
+                        currentMoneyProvided = new BigDecimal("0.00");
+                        break;
+                    }
                 }
             }
             else if(choice.equals("exit")) {
-                // good bye
+                System.out.println("\nThank you for shopping with us!");
                 break;
             }
         }
+    }
+
+    public BigDecimal dispense(Item itemSelection, BigDecimal currentMoneyProvided){
+        BigDecimal itemPrice = itemSelection.getPrice();
+        if (currentMoneyProvided.compareTo(itemPrice) == -1){
+            System.out.println("\n *** Insufficient funds ***\n");
+        } else {
+            currentMoneyProvided = currentMoneyProvided.subtract(itemSelection.getPrice());
+            itemSelection.reduceQuantity();
+            System.out.println("------------------------------------------------------------------");
+            System.out.println("Dispensing: " + itemSelection.getName() + "\nPrice: $" +
+                    itemSelection.getPrice() + "Remaining Available Funds: $" + currentMoneyProvided);
+            System.out.println(itemSelection.dispenseMessage());
+            System.out.println("------------------------------------------------------------------");
+        }
+        return currentMoneyProvided;
     }
 
     public List<Item> readFile(String filePath) {
@@ -61,5 +94,39 @@ public class VendingMachine {
             System.out.println("File not found");
         }
         return inventory;
+    }
+
+    @Override
+    public void returnChange(BigDecimal currentMoneyProvided) {
+        BigDecimal zero = new BigDecimal("0.00");
+        int dollars = 0;
+        int quarters = 0;
+        int dimes = 0;
+        int nickels = 0;
+
+        while ((currentMoneyProvided.compareTo(dollar) == 1) ||
+                currentMoneyProvided.compareTo(dollar) == 0) {
+            currentMoneyProvided = currentMoneyProvided.subtract(dollar);
+            dollars++;
+        }
+        while ((currentMoneyProvided.compareTo(quarter) == 1) ||
+                currentMoneyProvided.compareTo(quarter) == 0) {
+            currentMoneyProvided = currentMoneyProvided.subtract(quarter);
+            quarters++;
+        }
+        while ((currentMoneyProvided.compareTo(dime) == 1) ||
+                currentMoneyProvided.compareTo(dime) == 0) {
+            currentMoneyProvided = currentMoneyProvided.subtract(dime);
+            dimes++;
+        }
+        while ((currentMoneyProvided.compareTo(nickel) == 1) ||
+                currentMoneyProvided.compareTo(nickel) == 0) {
+            currentMoneyProvided = currentMoneyProvided.subtract(nickel);
+            nickels++;
+        }
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("\nReturning change: " + dollars + " dollar(s), " +
+                quarters + " quarter(s), " + dimes + " dime(s), and " + nickels + " nickel(s).");
+        System.out.println("------------------------------------------------------------------");
     }
 }
