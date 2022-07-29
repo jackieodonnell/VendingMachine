@@ -16,7 +16,7 @@ import java.util.*;
 
 import com.techelevator.Helpers.ChangeHelper;
 
-public class VendingMachine implements Change {
+public class VendingMachine{
     List<Item> inventory;
     BigDecimal currentMoneyProvided = new BigDecimal("0.00");
     Logger logger;
@@ -49,7 +49,7 @@ public class VendingMachine implements Change {
             if (purchaseChoice.equals("feed money")) {
                 BigDecimal moneyInserted = UserInput.feedMoney();
                 currentMoneyProvided = currentMoneyProvided.add(moneyInserted);
-                if (moneyInserted.compareTo(new BigDecimal(0.00)) == 1) {
+                if (moneyInserted.compareTo(new BigDecimal("0.00")) == 1) {
                     String moneyInsertedFormat = "$" + moneyInserted + ".00";
                     String currentMoneyProvidedFormat = "$" + currentMoneyProvided;
                     String writeAudit = String.format("%tD %tr %-18s %-3s %8s   %5s", LocalDate.now(), LocalTime.now().withNano(0),
@@ -72,7 +72,7 @@ public class VendingMachine implements Change {
                     System.out.println(" *** Invalid Selection ***");
                 }
             } else if (purchaseChoice.equals("finish transaction")) {
-                Map<String, Integer> change = returnChange(currentMoneyProvided);
+                Map<String, Integer> change = ChangeHelper.returnChange(currentMoneyProvided);
                 UserOutput.displayReturnChange(change);
                 String currentMoneyFormat = "$" + currentMoneyProvided;
                 String writeAudit = String.format("%tD %tr %-18s %-3s %8s %5s", LocalDate.now(), LocalTime.now().withNano(0),
@@ -98,36 +98,5 @@ public class VendingMachine implements Change {
             System.out.println("------------------------------------------------------------------");
         }
         return currentMoneyProvided;
-    }
-
-    @Override
-    public Map<String, Integer> returnChange(BigDecimal currentMoneyProvided) {
-        BigDecimal zero = new BigDecimal("0.00");
-        Map<String, Integer> change = new HashMap<>();
-        change.put("dollars", 0);
-        change.put("quarters", 0);
-        change.put("dimes", 0);
-        change.put("nickels", 0);
-
-        while (currentMoneyProvided.compareTo(zero) == 1) {
-            if (ChangeHelper.isChangeAvailable(currentMoneyProvided, dollar)) {
-                currentMoneyProvided = currentMoneyProvided.subtract(dollar);
-                change.put("dollars", change.get("dollars") + 1);
-                continue;
-            } else if (ChangeHelper.isChangeAvailable(currentMoneyProvided, quarter)) {
-                currentMoneyProvided = currentMoneyProvided.subtract(quarter);
-                change.put("quarters", change.get("quarters") + 1);
-                continue;
-            } else if (ChangeHelper.isChangeAvailable(currentMoneyProvided, dime)) {
-                currentMoneyProvided = currentMoneyProvided.subtract(dime);
-                change.put("dimes", change.get("dimes") + 1);
-                continue;
-            } else if (ChangeHelper.isChangeAvailable(currentMoneyProvided, nickel)) {
-                currentMoneyProvided = currentMoneyProvided.subtract(nickel);
-                change.put("nickels", change.get("nickels") + 1);
-                continue;
-            }
-        }
-        return change;
     }
 }

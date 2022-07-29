@@ -4,6 +4,7 @@ import com.techelevator.models.Item;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -73,7 +74,7 @@ public class UserInput {
             } else {
                 System.out.println("\n*** Unsupported currency ***");
             }
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException | NoSuchElementException e){
             System.out.println("\n*** Unrecognized entry ***");
         }
         return moneyInserted;
