@@ -85,7 +85,7 @@ public class UserInput {
         String inputCode = scanner.nextLine();
         Item selectedItem = null;
         for (Item item : inventory) {
-            if (item.getSlotIdentifier().equals(inputCode)) {
+            if (item.getSlotIdentifier().equals(inputCode.toUpperCase())) {
                 selectedItem = item;
                 if (selectedItem.getQuantity() == 0) {
                     System.out.println("NO LONGER AVAILABLE");
