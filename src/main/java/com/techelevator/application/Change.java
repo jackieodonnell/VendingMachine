@@ -1,6 +1,7 @@
 package com.techelevator.application;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public interface Change {
     BigDecimal dollar = new BigDecimal("1.00");
@@ -8,6 +9,8 @@ public interface Change {
     BigDecimal dime = new BigDecimal("0.10");
     BigDecimal nickel = new BigDecimal("0.05");
 
-    public void returnChange (BigDecimal currentMoneyProvided);
+
+
+    public Map<String, Integer> returnChange (BigDecimal currentMoneyProvided);
 }
 

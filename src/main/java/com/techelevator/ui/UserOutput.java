@@ -3,6 +3,7 @@ package com.techelevator.ui;
 import com.techelevator.models.Item;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserOutput {
     public static void displayMessage(String message) {
@@ -40,4 +41,13 @@ public class UserOutput {
             System.out.println();
         }
     }
+
+    public static void displayReturnChange(Map<String, Integer> change){
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("\nReturning change: " + change.get("dollars") + " dollar(s), " +
+                change.get("quarters") + " quarter(s), " + change.get("dimes") + " dime(s), and " +
+                change.get("nickels") + " nickel(s).");
+        System.out.println("------------------------------------------------------------------");
+    }
+
 }
