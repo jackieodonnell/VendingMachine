@@ -3,6 +3,7 @@ package com.techelevator.ui;
 import com.techelevator.models.Item;
 import com.techelevator.reader.FileRead;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +20,7 @@ public class UserInputTests {
 
     }
     InputStream inputStream;
+
     @Test
     public void feedMoney_pass_in_5_returns_5() {
         String testOne = "5";
