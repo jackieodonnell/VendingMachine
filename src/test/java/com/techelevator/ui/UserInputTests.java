@@ -14,10 +14,10 @@ import static org.junit.Assert.*;
 
 public class UserInputTests {
 
-//    @Test
-//    public void getPurchaseScreenOption_pass_in_m_returns_feed_money() {
-//
-//    }
+    @Test
+    public void getPurchaseScreenOption_pass_in_m_returns_feed_money() {
+
+    }
     InputStream inputStream;
     @Test
     public void feedMoney_pass_in_5_returns_5() {
