@@ -26,7 +26,7 @@ Note: JDK must be installed in order to compile from the terminal.
     > B2,Papsi,3.45,Drink
     > D1,Moonpie,2.95,Candy
     > ```
-        - If the filepath is invalid, readFile() catches a `FileNotFoundException` and prints 'File not found' to the console.
+    - If the filepath is invalid, readFile() catches a `FileNotFoundException` and prints 'File not found' to the console.
     - the `Logger` class has a custom constructor which creates an Audit.txt logger file, and a write() method which prints to the log.
     <br>
     Sample Audit.txt log file after executing the program:
@@ -82,7 +82,7 @@ A main menu must display when the software runs, presenting the following option
 <br>
 
 ## Unit Testing
-The test classes listed below encapsulate the following JUnit tests:
+The test classes listed below encapsulate the JUnit tests for the following units:
 
  Test Class            | Methods Tested 
 ------------------------|-------------
