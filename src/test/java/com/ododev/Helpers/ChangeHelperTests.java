@@ -1,13 +1,10 @@
-package com.techelevator.Helpers;
+package com.ododev.Helpers;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class ChangeHelperTests {
 

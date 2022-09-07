@@ -1,9 +1,8 @@
-package com.techelevator.ui;
+package com.ododev.ui;
 
-import com.techelevator.models.Item;
-import com.techelevator.reader.FileRead;
+import com.ododev.models.Item;
+import com.ododev.reader.FileRead;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

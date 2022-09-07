@@ -1,7 +1,7 @@
-package com.techelevator;
+package com.ododev;
 
 
-import com.techelevator.application.VendingMachine;
+import com.ododev.application.VendingMachine;
 
 public class VendingMachineCLI {
 

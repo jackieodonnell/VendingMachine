@@ -1,6 +1,6 @@
-package com.techelevator.reader;
+package com.ododev.reader;
 
-import com.techelevator.models.*;
+import com.ododev.models.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

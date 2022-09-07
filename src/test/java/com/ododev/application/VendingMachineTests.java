@@ -1,9 +1,7 @@
-package com.techelevator.application;
+package com.ododev.application;
 
-import com.techelevator.models.Drink;
-import com.techelevator.models.Item;
-import com.techelevator.models.Munchy;
-import org.junit.Assert;
+import com.ododev.models.Drink;
+import com.ododev.models.Munchy;
 import org.junit.Test;
 
 import java.math.BigDecimal;

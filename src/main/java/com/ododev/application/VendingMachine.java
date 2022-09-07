@@ -1,20 +1,18 @@
-package com.techelevator.application;
+package com.ododev.application;
 
-import com.techelevator.logger.Logger;
-import com.techelevator.models.*;
-import com.techelevator.reader.FileRead;
-import com.techelevator.ui.UserInput;
-import com.techelevator.ui.UserOutput;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
+import com.ododev.logger.Logger;
+import com.ododev.models.*;
+import com.ododev.reader.FileRead;
+import com.ododev.ui.UserInput;
+import com.ododev.ui.UserOutput;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
 
-import com.techelevator.Helpers.ChangeHelper;
+import com.ododev.Helpers.ChangeHelper;
 
 public class VendingMachine{
     List<Item> inventory;
